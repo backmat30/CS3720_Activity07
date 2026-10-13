@@ -1,9 +1,16 @@
 services:
   - type: web
-    name: mobile-courses-api
+    name: activity07
     runtime: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: python server.py
-    healthCheckPath: /products
+    region: oregon
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.14"
+    healthCheckPath: /
     
